@@ -6,11 +6,41 @@ import { stripe } from "../app.js";
 
 
 const createPaymentIntent = asyncHandler(async(req,res,next)=>{
-   const {amount} = req.body;
-   if(!amount) throw new ApiError(400,"Please Enter Amount")
+   const {amount,shippingInfo,name} = req.body;
+   console.log(shippingInfo)
+   if(!amount ){
+    return res
+    .status(400)
+    .json(new ApiError(400,"Please Enter Amount"))
+
+   }  
+   if(!shippingInfo ){
+    return res
+    .status(400)
+    .json(new ApiError(400,"Please Provide Shipping details"))
+
+   } 
+   if(!name ){
+    return res
+    .status(400)
+    .json(new ApiError(400,"Please provide user details"))
+
+   } 
    const paymentIntent = await stripe.paymentIntents.create({
+    description:"E-commerce services",
+    shipping:{
+      name,
+      address:{
+        line1:shippingInfo.address,
+        postal_code:shippingInfo.pinCode,
+        city: shippingInfo.city,
+        state:shippingInfo.state,
+        country:shippingInfo.country
+      }
+    },
   amount:Number(amount)*100, //amount is in paise
-  currency:"inr"
+  currency:"inr",
+  payment_method_types:["card"]
 
 })
 

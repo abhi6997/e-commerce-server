@@ -12,19 +12,29 @@ const newOrder = asyncHandler(async (req, res, next) => {
     shippingInfo,
     orderItems,
     user,
-    subtotal,
+    subTotal,
     tax,
     shippingCharges,
     discount,
     total,
   } = req.body;
+  console.log(shippingInfo,
+    orderItems,
+    user,
+    subTotal,
+    tax,
+    shippingCharges,
+    discount,
+    total,)
+
+  console.log("new order data received")
 
  
 
-  if (!shippingInfo || !orderItems || !user || !subtotal || !tax || !total) {
+  if (!shippingInfo || !orderItems || !user || !subTotal || !tax || !total) {
    
     return res
-    .status(200)
+    .status(400)
     .json(new ApiError(400, "Please Enter All Fields"));
    
   }
@@ -33,7 +43,7 @@ const newOrder = asyncHandler(async (req, res, next) => {
     shippingInfo,
     orderItems,
     user,
-    subtotal,
+    subTotal,
     tax,
     shippingCharges,
     discount,
