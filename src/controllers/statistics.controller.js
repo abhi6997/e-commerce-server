@@ -464,6 +464,7 @@ const getPieCharts = asyncHandler(async (req, res, next) => {
   }
 
   return res.status(200).json({
+    message:"Data for line chart fetched successfully",
     success: true,
     lineCharts,
   });

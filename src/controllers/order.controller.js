@@ -80,6 +80,7 @@ const myOrders = asyncHandler(async (req, res, next) => {
     orders = JSON.parse(myCache.get(key));
   } else {
     orders = await Order.find({user:id}).populate("user","name")
+    console.log(orders)
    
     myCache.set(key, JSON.stringify(orders));
   }
